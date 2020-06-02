@@ -2163,7 +2163,7 @@ sub master_server_update
 	foreach my $patern (@ext_paterns)
 	{
 		chop $patern;
-		push (@installcmds, "find  -iname \\\*.$patern -exec cp -Rfp --parents {} '$my_home_path'/ \\\;");
+		push (@installcmds, "find  -iname \\\*$patern -exec cp -Rfp --parents {} '$my_home_path'/ \\\;");
 	}
 	close EXT_PATTERNS;
 	
