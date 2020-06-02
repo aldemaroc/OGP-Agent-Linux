@@ -15,7 +15,7 @@
 AGENTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASH_PREFS_CONF="$AGENTDIR/Cfg/bash_prefs.cfg"
 REPONAME=OGP-Agent-Linux
-GitHubUsername="OpenGamePanel"
+GitHubUsername="aldemaroc"
 
 #####################
 #     FUNCTIONS     #
