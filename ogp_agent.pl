@@ -2163,7 +2163,7 @@ sub master_server_update
 	foreach my $patern (@ext_paterns)
 	{
 		chop $patern;
-		push (@installcmds, "find $my_home_path/ -type l -iname \*$patern -delete \\\;");
+		push (@installcmds, "find $my_home_path/ -type l -iname \*$patern -delete");
 		if($patern eq 'cfg' || $patern eq 'txt' || $patern eq 'inf' || $patern eq 'info' || $patern eq 'acf' || $patern eq 'vdf'){
 			push (@installcmds, "find  -iname \\\*$patern -exec cp -Rnp --parents {} '$my_home_path'/ \\\;");
 		}else{
