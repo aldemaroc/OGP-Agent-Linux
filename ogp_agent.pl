@@ -1259,7 +1259,7 @@ sub stop_server_without_decrypt
 								 );
 
 			my $rconCommand = "quit";
-			$rcon2->run($rconCommand);
+			#$rcon2->run($rconCommand);
 			$usedProtocolToStop = 1;
 		}
 		elsif ($control_protocol eq "armabe")
