@@ -1,5 +1,5 @@
 <?php
-include("GameQ.php");
+require_once __DIR__ . '/Autoloader.php';
 
 //------------------------------------------------------------------------------------------------------------+
 
@@ -40,7 +40,7 @@ elseif (preg_match("/([0-9a-z\.\-]+)/i", $ip, $match))    { $ip = $match[1]; }
 
 //------------------------------------------------------------------------------------------------------------+
 // QUERY SERVER
-$gq = new GameQ();
+$gq = new \GameQ\GameQ();
 $server = array(
 					'id' => 'server',
 					'type' => $type,
@@ -49,8 +49,8 @@ $server = array(
 $gq->addServer($server);
 $gq->setOption('timeout', 1);
 $gq->setOption('debug', FALSE);
-$gq->setFilter('normalise');
-$results = $gq->requestData();
+$gq->addFilter('normalise');
+$results = $gq->process();
 
 //------------------------------------------------------------------------------------------------------------+
 // SERIALIZED OUTPUT
