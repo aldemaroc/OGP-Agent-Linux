@@ -321,6 +321,7 @@ my $d = Frontier::Daemon::OGP::Forking->new(
 				 automatic_steam_update			=> \&automatic_steam_update,
 				 get_log					  	=> \&get_log,
 				 stop_server				  	=> \&stop_server,
+				 stop_port					  	=> \&stop_port,
 				 send_rcon_command				=> \&send_rcon_command,
 				 dirlist						=> \&dirlist,
 				 dirlistfm						=> \&dirlistfm,
@@ -1341,6 +1342,7 @@ sub stop_server_without_decrypt
 				logger "Stopped process with pid $pid successfully using kill 15.";
 			}
 		}
+		stop_port_without_decrypt($server_ip, $server_port);
 		system('screen -wipe > /dev/null 2>&1');
 		return 0;
 	}
@@ -1372,9 +1374,32 @@ sub stop_server_without_decrypt
 				logger "Stopped process with pid $pid successfully using kill 15.";
 			}
 		}
+		stop_port_without_decrypt($server_ip, $server_port);
 		system('screen -wipe > /dev/null 2>&1');
 		return 0;
 	}
+}
+
+# stop port using nuclear power function
+sub stop_port
+{
+	chomp(@_);
+	return "Bad Encryption Key" unless(decrypt_param(pop(@_)) eq "Encryption checking OK");
+	return stop_port_without_decrypt(decrypt_params(@_));
+}
+
+##### Stop port without decrypt
+### Return 0 on success (always)
+sub stop_port_without_decrypt
+{
+	my ($server_ip, $server_port) = @_;
+	logger "Killing IP:PORT $server_ip:$server_port using nuclear power";
+	system('pkill -f $(echo 000000000000$(basename $(readlink "/proc/$(lsof -t -i @'.$server_ip.':'.$server_port.')/cwd" | sed -e "s/(deleted)//g")) | tr -d " \t\n\r" | tail -c 9)');
+	system('pkill --signal 9 -f $(echo 000000000000$(basename $(readlink "/proc/$(lsof -t -i @'.$server_ip.':'.$server_port.')/cwd" | sed -e "s/(deleted)//g")) | tr -d " \t\n\r" | tail -c 9)');
+	system('pkill -f -9 $(echo 000000000000$(basename $(readlink "/proc/$(lsof -t -i @'.$server_ip.':'.$server_port.')/cwd" | sed -e "s/(deleted)//g")) | tr -d " \t\n\r" | tail -c 9)');
+	system('kill -9 $(lsof -t -i @'.$server_ip.':'.$server_port.')');
+	
+	return 0;
 }
 
 ##### Send RCON command 
