@@ -789,6 +789,9 @@ sub universal_start_without_decrypt
 		return -10;
 	}
 	
+	# Make sure the port is free before doing anything
+	stop_port_without_decrypt($server_ip, $server_port);
+	
 	my $uid = `id -u`;
 	chomp $uid;
 	my $gid = `id -g`;
