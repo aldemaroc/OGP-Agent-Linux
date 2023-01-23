@@ -615,6 +615,11 @@ sub replace_OGP_Env_Vars{
 		$exec_cmd =~ s/{OGP_HOME_DIR}/$homepath/g;
 	}
 	
+	# Nova Variavel HOMEID
+	if(defined $homeid && $homeid ne ""){
+		$exec_cmd =~ s/{OGP_HOME_ID}/$homeid/g;
+	}
+	
 	# Handle global game shared directory replacement
 	if(defined $game_key && $game_key ne ""){
 		my $readable_game_key = lc(substr($game_key, 0, rindex($game_key,"_")));		
