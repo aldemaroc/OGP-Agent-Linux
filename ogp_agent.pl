@@ -1166,10 +1166,10 @@ sub get_log
 	
 	foreach my $line (@modedlines) {
 		#Text replacements to remove the Steam user login from steamcmd logs for security reasons.
+		$line =~ s/force_install_dir.*//g;
 		$line =~ s/login .*//g;
 		$line =~ s/Logging .*//g;
 		$line =~ s/set_steam_guard_code.*//g;
-		$line =~ s/force_install_dir.*//g;
 		#Text replacements to remove empty lines.
 		$line =~ s/^ +//g;
 		$line =~ s/^\t+//g;
@@ -2274,7 +2274,9 @@ sub steam_cmd_without_decrypt
 	if(defined STEAM_DL_LIMIT && STEAM_DL_LIMIT ne "" && is_integer(STEAM_DL_LIMIT) && STEAM_DL_LIMIT > 0){
 		print FILE "set_download_throttle " . STEAM_DL_LIMIT . "\n";
 	}
-	
+		
+	print FILE "force_install_dir \"$home_path\"\n";
+ 
 	if($guard ne '')
 	{
 		print FILE "set_steam_guard_code $guard\n";
@@ -2287,8 +2289,7 @@ sub steam_cmd_without_decrypt
 	{
 		print FILE "login anonymous\n";
 	}
-	
-	print FILE "force_install_dir \"$home_path\"\n";
+
 
 	if($modname ne "")
 	{
@@ -4207,6 +4208,7 @@ sub steam_workshop_without_decrypt
 		open  FILE, '>', $installtxt;
 		print FILE "\@ShutdownOnFailedCommand 1\n";
 		print FILE "\@NoPromptForPassword 1\n";
+		print FILE "force_install_dir \"$mods_full_path\"\n";
 		if($anonymous_login eq "0")
 		{
 			print FILE "login $user $pass\n";
@@ -4215,7 +4217,6 @@ sub steam_workshop_without_decrypt
 		{
 			print FILE "login anonymous\n";
 		}
-		print FILE "force_install_dir \"$mods_full_path\"\n";
 		foreach my $workshop_mod (@workshop_mods)
 		{
 			print FILE "workshop_download_item $workshop_id $workshop_mod\n";
