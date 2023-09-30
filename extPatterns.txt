@@ -1,8 +1,10 @@
 .so
 .bin
+cs2
 srcds_linux
 srcds_run
 .cfg
+.vcfg
 .conf
 .config
 .ini
