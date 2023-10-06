@@ -38,3 +38,4 @@ srcds_run
 .html
 .doc
 .zip
+.gi
