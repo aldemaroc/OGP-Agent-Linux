@@ -2265,7 +2265,11 @@ sub steam_cmd_without_decrypt
 	{
 		print FILE "\@sSteamCmdForcePlatformType windows\n";
 	}
-	
+ 	else
+ 	{
+  		print FILE "\@sSteamCmdForcePlatformType linux\n";
+	}
+ 
 	# Handle requested SteamCMD architecture
 	if(defined $arch_bits && $arch_bits ne ""){
 		print FILE "\@sSteamCmdForcePlatformBitness " . $arch_bits . "\n";
@@ -2275,7 +2279,7 @@ sub steam_cmd_without_decrypt
 		print FILE "set_download_throttle " . STEAM_DL_LIMIT . "\n";
 	}
 		
-	print FILE "force_install_dir \"$home_path\"\n";
+	print FILE "force_install_dir \"$home_path\" \n";
  
 	if($guard ne '')
 	{
